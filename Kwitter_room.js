@@ -7,6 +7,9 @@ var firebaseConfig = {
   messagingSenderId: "154367197245",
   appId: "1:154367197245:web:95abd4e49672ccd444aa54"
 };
+firebase.initializeApp(firebaseConfig);
+
+
 user_name = localStorage.getItem("user_name");
 document.getElementById("user_name").innerHTML = "Welcome " + user_name + "!";
 
@@ -40,5 +43,21 @@ function redirectToRoomName(name){
 }
 
 
+function addRoom(){
+  room_name = document.getElementById("room_name").value;
+
+  firebase.database().ref("/").child(room_name).update({
+    purpose : "adding room name"    
+  });
+
+  localStorage.setItem("room_name", room_name);
+
+  window.location = "kwitter_page.html";
+}
 
 
+function logout(){
+  localStorage.removeItem("user_name");
+  localStorage.removeItem("room_name");
+  window.location = "index.html";
+}
